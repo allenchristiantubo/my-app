@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; background: #191c1c;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-header .navbar-header {
+    background: #d7e3ff;
+    padding: 8px 16px;
+}
+
+.form-field{
+    width: 100%;
+    margin-top: 10px;
+}
+
+.full-width{
+    width: 100%;
+}

@@ -1,0 +1,41 @@
+.container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.login-container{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.title-container{
+    margin-bottom: 30px;
+}
+
+.title{
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #d6d6d6;
+}
+
+.sub-title{
+    font-size: 18px;
+    color: #5f5f5f;
+    text-align: center;
+    font-weight: 500;
+}
+
+.login-button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-login{
+    padding:8px 32px;
+}

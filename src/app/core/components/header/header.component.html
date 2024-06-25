@@ -1,0 +1,19 @@
+<mat-toolbar *ngIf="isNavbarVisible" class="navbar-header">
+    <div class="container d-flex">
+        <button mat-button color="primary">SyncMe</button>
+        <button mat-button color="primary" (click)="goToTasks()">Tasks</button>
+        <button mat-button color="primary">Notes</button>
+        <button mat-button color="primary">Calendar</button>
+        <span class="example-spacer"></span>
+        <button mat-icon-button>
+            <mat-icon color="primary" fontSet="material-icons-outlined">notifications</mat-icon>
+        </button>
+        <button mat-button [matMenuTriggerFor]="beforeMenu" color="primary">Allen <mat-icon>keyboard_arrow_down</mat-icon></button>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item>Settings</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()"><mat-icon fontSet="material-icons-outlined">logout</mat-icon>Logout</button>
+        </mat-menu>
+    </div>
+</mat-toolbar>
