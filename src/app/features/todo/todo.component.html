@@ -15,8 +15,8 @@
                 <button mat-flat-button (click)="addNewTask()">Add New Task</button>
             </div>
         </div>
-        <mat-card *ngIf="showFilter">
-            <mat-card-content>
+        <mat-card *ngIf="showFilter" appearance="outlined" class="mt-3">
+            <!-- <mat-card-content>
                 <div class="d-flex justify-content-end">
                     <button mat-button [matMenuTriggerFor]="beforeMenu">Types</button>
                     <mat-menu #beforeMenu="matMenu" xPosition="before">
@@ -37,9 +37,9 @@
                         </div>
                     </mat-menu>
                 </div>
-            </mat-card-content>
+            </mat-card-content> -->
         </mat-card>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-4">
                 <div>To Do</div>
                 <div
@@ -50,7 +50,14 @@
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
                 @for (toDo of newData; track toDo) {
-                    <div class="example-box" cdkDrag>{{toDo.name}}</div>
+                    <mat-card class="example-box d-flex justify-content-between align-items-center mt-2" cdkDrag appearance="outlined">
+                        <mat-card-content class="w-100">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>{{toDo.name}}</div>
+                            <button mat-icon-button (click)="deleteTask(toDo)"><mat-icon color="warn" fontSet="material-icons-outlined">close</mat-icon></button>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 }
                 </div>
             </div>

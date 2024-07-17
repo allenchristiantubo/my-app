@@ -13,6 +13,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
 import { TodoConfirmationDialogComponent } from './todo-confirmation-dialog/todo-confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [TodoComponent, TodoDialogComponent, TodoConfirmationDialogComponent],
@@ -25,7 +29,11 @@ import { TodoConfirmationDialogComponent } from './todo-confirmation-dialog/todo
     MatListModule,
     MatCardModule,
     MatMenuModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatCheckboxModule,
+    ReactiveFormsModule,
     CdkDropList,
     CdkDrag,
     TodoRoutingModule

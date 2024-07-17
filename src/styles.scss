@@ -15,3 +15,11 @@ app-header .navbar-header {
 .full-width{
     width: 100%;
 }
+
+.mat-mdc-snack-bar-container {
+    &.error-snackbar {
+      --mdc-snackbar-container-color: #f44336;
+      --mdc-snackbar-supporting-text-color: #FFF;
+      --mat-snack-bar-button-color: #FFF;
+    }
+}

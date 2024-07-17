@@ -6,33 +6,35 @@ import { Portal } from '@angular/cdk/portal';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
+import { TodoConfirmationDialogComponent } from './todo-confirmation-dialog/todo-confirmation-dialog.component';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
-export interface StoryTaskBug{
-  name: string;
-  status: Status;
-  priority: number;
-  dateCreated: Date;
-  dateModified: Date;
-}
+// export interface StoryTaskBug{
+//   name: string;
+//   status: Status;
+//   priority: number;
+//   dateCreated: Date;
+//   dateModified: Date;
+// }
 
-export interface UserStory extends StoryTaskBug{ 
-  description: string;
-  taskBugs: TaskBug[];
-}
+// export interface UserStory extends StoryTaskBug{ 
+//   description: string;
+//   taskBugs: TaskBug[];
+// }
 
-export interface TaskBug extends StoryTaskBug{
-  type: Type;
-  effort: Effort;
-  description?: string;
-  retroSteps?: string;
-  systemInfo?: string;
-}
+// export interface TaskBug extends StoryTaskBug{
+//   type: Type;
+//   effort: Effort;
+//   description?: string;
+//   retroSteps?: string;
+//   systemInfo?: string;
+// }
 
-export interface Effort{
-  originalEstimate: number;
-  remaining: number;
-  completed: number;
-}
+// export interface Effort{
+//   originalEstimate: number;
+//   remaining: number;
+//   completed: number;
+// }
 
 export enum Type{
   UserStory,
@@ -51,48 +53,6 @@ export interface ToDo{
   date: Date;
   status: Status;
 }
-
-const USER_STORY_DATA: UserStory[] = [
-  {
-    name: '',
-    description: '',
-    status: Status.New,
-    priority: 0,
-    dateCreated: new Date(),
-    dateModified: new Date(),
-    taskBugs: [
-      {
-        name: '',
-        description: '',
-        type: Type.Task,
-        status: Status.New,
-        priority: 0,
-        dateCreated: new Date(),
-        dateModified: new Date(),
-        effort: {
-          originalEstimate : 0,
-          remaining: 0,
-          completed: 0
-        }
-      },
-      {
-        name: '',
-        retroSteps: '',
-        systemInfo: '',
-        type: Type.Bug,
-        status: Status.New,
-        priority: 0,
-        dateCreated: new Date(),
-        dateModified: new Date(),
-        effort: {
-          originalEstimate : 0,
-          remaining: 0,
-          completed: 0
-        }
-      }
-    ]
-  }
-]
 
 const TODO_DATA: ToDo[] = [
     {
@@ -133,6 +93,7 @@ export class TodoComponent implements OnInit{
   showFilter: boolean = false;
   
   constructor(private navbarService: NavbarService,
+    private snackBarService: SnackbarService,
     private dialog: MatDialog
   ){
     this.navbarService.isNavbarVisible.next(true);
@@ -188,19 +149,50 @@ export class TodoComponent implements OnInit{
   }
 
   addNewTask(){
+    // var x = of("hello").pipe(delay(5000), timeout(4000));
+
+    // x.subscribe(r => {
+    //   console.log(r);
+    // })
     const dialogRef = this.dialog.open(TodoDialogComponent, {
       data: {action: 'Add'}
     });
 
     dialogRef.afterClosed().subscribe({
-      next: (response: any) => {
-        var newTodo : ToDo = {
-          name: `Task ${this.toDoData.length + 1}`,
-          date: new Date(),
-          status: Status.New
+      next: (data: any) => {
+        if(data){
+          var existing = this.toDoData.find(x => x.name == data.name);
+          if(existing){
+            this.snackBarService.open(`${data.name} is already existing`,'Ok',50000, 'error-snackbar')
+          }else{
+            var newTodo : ToDo = {
+              name: data.name,
+              date: new Date(),
+              status: Status.New
+            }
+            
+            this.toDoData.push(newTodo);
+            this.filterTaskData();
+          }
         }
-        this.toDoData.push(newTodo);
-        this.filterTaskData();
+      }
+    })
+  }
+
+  deleteTask(taskToDelete: ToDo){
+    const dialogRef = this.dialog.open(TodoConfirmationDialogComponent, {
+      data: {action: 'Add', taskToDelete: taskToDelete}
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (data: any) => {
+        if(data){
+          var index = this.toDoData.findIndex(task => task == taskToDelete);
+          if(index >= 0){
+            this.toDoData.splice(index, 1);
+            this.filterTaskData();
+          }
+        }
       }
     })
   }
